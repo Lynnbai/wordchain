@@ -205,6 +205,8 @@ body.theme-dark{
       <input class="auth-input" type="text" id="regUsername" placeholder="手机号或字母+数字，方便付款核对" autocomplete="off">
       <label class="auth-field-label">密码</label>
       <input class="auth-input" type="password" id="regPassword" placeholder="设置密码（6位以上）" autocomplete="new-password">
+      <label class="auth-field-label">确认密码</label>
+      <input class="auth-input" type="password" id="regPassword2" placeholder="再次输入密码" autocomplete="new-password">
       <button class="auth-btn" id="regBtn" onclick="handleRegister()">注 册</button>
       <div class="auth-error" id="regError"></div>
     </div>
@@ -384,9 +386,11 @@ function toEmail(u) {
 async function handleRegister() {
   const un = document.getElementById('regUsername').value.trim();
   const pw = document.getElementById('regPassword').value;
+  const pw2 = document.getElementById('regPassword2').value;
   const e = document.getElementById('regError');
   if (!un||un.length<2||un.length>20||!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(un)) { e.textContent='用户名需2-20位字母/数字/中文/下划线'; return; }
   if (!pw||pw.length<6) { e.textContent='密码需6位以上'; return; }
+  if (pw !== pw2) { e.textContent='两次密码不一致'; return; }
   const btn = document.getElementById('regBtn'); btn.disabled = true; btn.textContent = '注册中...'; e.textContent = '';
   try {
     const email = toEmail(un);
